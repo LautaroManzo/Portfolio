@@ -52,7 +52,7 @@ const Principal = () => {
             <div className="flex flex-col items-center gap-3 md:flex-row md:flex-wrap md:justify-start">
 
                 <a
-                    href="../../public/cv-lm.pdf" download
+                    href="/Portfolio/cv-lm.pdf" download
                     className="inline-flex items-center justify-center w-[70%] max-w-[360px] md:w-auto bg-[#4793AF] border-2 border-[#4793AF] text-white font-medium gap-2 px-5 py-2 rounded-full transition-all duration-300 hover:bg-white hover:text-[#4793AF]"
                 >
                     <FaDownload /> Descargar CV
