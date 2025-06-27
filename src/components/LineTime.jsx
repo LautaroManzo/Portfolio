@@ -29,11 +29,6 @@ const LineTime = () => {
       body: "UTN BA - Facultad Regional Buenos Aires",
     },
     {
-      time: "2019 - 2020",
-      title: "Ayudante de Reparación y Pintura Automotriz",
-      body: "Taller El Podio",
-    },
-    {
       time: "2013 - 2019",
       title: "Técnico en Automotores",
       body: "Escuela Técnica N°3 Domingo Faustino Sarmiento",
