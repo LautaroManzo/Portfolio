@@ -1,25 +1,38 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #7aa2f7;
+  --color-dark: #e2e8f0;
+  --color-muted: #6b7b99;
+  --color-bg: #1a1b26;
+  --color-accent-light: #1f2335;
+}
+
 body {
-    background-color: #DFF6FF;
+  background-color: var(--color-bg);
 }
 
 #root {
-    display: flex;
-    flex-direction: column;
-    max-width: 90%;
-    justify-self: center;
-    gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 90%;
+  margin: 0 auto;
+  gap: 0;
 }
 
 @media (max-width: 968px) {
-    #root {
-        max-width: 100%;
-    }
+  #root {
+    max-width: 100%;
+  }
 }
 
-button:focus {
-    outline: none;
+.vertical-timeline {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.vertical-timeline-element-content h2 {
+  color: #e2e8f0 !important;
 }
 
 #tsparticles {

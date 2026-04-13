@@ -1,12 +1,15 @@
-import React from "react";
-
 const currentYear = new Date().getFullYear();
 
 const Footer = () => {
   return (
-    <footer className="p-2 pt-4">
-      <div className="w-full p-6 shadow-lg flex flex-row items-center justify-center rounded-lg bg-[#4793AF] text-[12px] sm:text-sm text-center font-semibold">
-        <p className="text-gray-100">{currentYear} &nbsp;&nbsp; | &nbsp;&nbsp; lau_manzo12@hotmail.com</p>
+    <footer className="w-full border-t border-white/8 mt-8">
+      <div className="px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p className="text-sm text-muted/70 font-mono">
+          © {currentYear} <span className="text-primary">Lautaro Manzo</span>
+        </p>
+        <p className="text-sm text-muted/50">
+          lau_manzo12@hotmail.com
+        </p>
       </div>
     </footer>
   );

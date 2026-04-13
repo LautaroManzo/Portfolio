@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-
 import { loadSlim } from "@tsparticles/slim";
 
-const ParticlesBackground = () => {
+import { PRIMARY, BG } from "../../constants/colors";
 
+const ParticlesBackground = () => {
   const [init, setInit] = useState(false);
 
   useEffect(() => {
@@ -16,65 +15,43 @@ const ParticlesBackground = () => {
 
   const options = useMemo(() => ({
     background: {
-      color: {
-        value: "#DFF6FF",
-      },
+      color: { value: BG },
     },
     particles: {
       number: {
-        value: 130,
-        density: {
-          enable: true,
-          area: 400,
-        },
+        value: 60,
+        density: { enable: true, area: 900 },
       },
-      color: {
-        value: "#4793AF",
-      },
-      shape: {
-        type: "circle",
-      },
-      opacity: {
-        value: 0.5,
-      },
-      size: {
-        value: { min: 1, max: 3 },
-      },
+      color: { value: PRIMARY },
+      shape: { type: "circle" },
+      opacity: { value: 0.25 },
+      size: { value: { min: 1, max: 2 } },
       links: {
-        enable: false,
+        enable: true,
+        color: PRIMARY,
+        distance: 160,
+        opacity: 0.08,
+        width: 1,
       },
       move: {
         enable: true,
-        speed: 1,
-        direction: "top",
-        outModes: {
-          default: "out",
-        },
+        speed: 0.6,
+        direction: "none",
+        outModes: { default: "out" },
       },
     },
     interactivity: {
       events: {
-        onHover: {
-          enable: false,
-        },
-        onClick: {
-          enable: false,
-        },
+        onHover: { enable: false },
+        onClick: { enable: false },
       },
     },
     detectRetina: true,
-  }), []);  
+  }), []);
 
   if (!init) return null;
 
-  return (
-    <Particles
-      id="tsparticles"
-      options={options}
-      style={{ position: "absolute", top: 0 }}
-    />
-  );
-
+  return <Particles id="tsparticles" options={options} />;
 };
 
 export default ParticlesBackground;
