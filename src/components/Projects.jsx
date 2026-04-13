@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 import { projects } from "../data/projects";
@@ -13,6 +13,23 @@ const SWIPE_THRESHOLD = 50;
 
 const Projects = () => {
   const [[current, direction], setCurrent] = useState([0, 0]);
+  const measureRef = useRef(null);
+  const [carouselHeight, setCarouselHeight] = useState("auto");
+
+  useEffect(() => {
+    const measure = () => {
+      if (!measureRef.current) return;
+      let max = 0;
+      for (const child of measureRef.current.children) {
+        max = Math.max(max, child.offsetHeight);
+      }
+      if (max > 0) setCarouselHeight(max);
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   const paginate = (dir) => {
     setCurrent(([prev]) => [(prev + dir + projects.length) % projects.length, dir]);
@@ -33,8 +50,15 @@ const Projects = () => {
         </h2>
       </div>
 
+      {/* Contenedor oculto para medir la altura natural de cada card */}
+      <div ref={measureRef} className="absolute invisible pointer-events-none w-[calc(100%-3rem)]">
+        {projects.map((p, i) => (
+          <ProjectCard key={i} {...p} />
+        ))}
+      </div>
+
       <div className="w-full flex flex-col items-center gap-5">
-        <div className="overflow-hidden w-full">
+        <div className="overflow-hidden w-full" style={{ height: carouselHeight }}>
           <AnimatePresence custom={direction} mode="wait">
             <motion.div
               key={current}
@@ -48,7 +72,7 @@ const Projects = () => {
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.1}
               onDragEnd={handleDragEnd}
-              className="cursor-grab active:cursor-grabbing"
+              className="cursor-grab active:cursor-grabbing h-full"
             >
               <ProjectCard {...projects[current]} />
             </motion.div>

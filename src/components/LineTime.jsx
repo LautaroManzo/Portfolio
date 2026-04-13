@@ -24,7 +24,7 @@ const LineTime = () => {
             date={item.time}
             contentStyle={{
               padding: "1rem 1.5rem",
-              borderRadius: "12px",
+              borderRadius: "16px",
               background: "#1f2335",
               color: "#e2e8f0",
               border: "1px solid rgba(255,255,255,0.06)",

@@ -7,9 +7,9 @@ const Principal = () => {
   return (
     <motion.div
       className="relative w-full flex flex-col md:flex-row-reverse items-center justify-center gap-12 px-6 py-16 sm:min-h-screen overflow-hidden"
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: -60 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      transition={{ type: "spring", stiffness: 300, damping: 12, mass: 1 }}
     >
 
       {/* Glow de fondo */}
