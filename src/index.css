@@ -1,43 +1,91 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #7aa2f7;
-  --color-dark: #e2e8f0;
-  --color-muted: #6b7b99;
-  --color-bg: #1a1b26;
-  --color-accent-light: #1f2335;
+  /* Papel */
+  --color-paper: oklch(96% 0.014 78);
+  --color-card: oklch(98% 0.008 80);
+  --color-card-warm: oklch(98% 0.01 80);
+  --color-chip: oklch(94% 0.014 78);
+
+  /* Tinta */
+  --color-ink: oklch(23% 0.02 60);
+  --color-ink-2: oklch(32% 0.03 60);
+  --color-ink-soft: oklch(36% 0.02 60);
+  --color-ink-muted: oklch(48% 0.02 60);
+
+  /* Acento */
+  --color-accent: oklch(45% 0.09 250);
+  --color-accent-strong: oklch(45% 0.1 250);
+
+  /* Decoración */
+  /* Tinte de secciones alternas: se aplica ENCIMA de la textura de papel para
+     que cada sección se distinga sin cortar la hoja continua. Subir el alpha
+     para marcar más la diferencia (0.035 ≈ 2% de luminosidad). */
+  --color-tint: oklch(30% 0.03 60 / 0.035);
+  /* Hairline entre secciones. Más suave que --color-line (bordes de cards). */
+  --color-divider: oklch(60% 0.02 60 / 0.2);
+  --color-tape: oklch(78% 0.06 90 / 0.55);
+  --color-line: oklch(60% 0.02 60 / 0.25);
+  --color-line-strong: oklch(60% 0.02 60 / 0.4);
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-bg);
+  margin: 0;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  max-width: 90%;
-  margin: 0 auto;
-  gap: 0;
+/* Capas de textura de papel: se pintan sobre cada sección */
+.paper-grain,
+.paper-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-@media (max-width: 968px) {
-  #root {
-    max-width: 100%;
+/* Grano en mosaico, no `filter: url(#paperGrain)` sobre toda la página: un
+   filtro SVG de ese tamaño se rasteriza por tiles y se compone aparte cuando
+   hay una capa promovida encima (el drag del carrusel), lo que dibujaba una
+   banda vertical tenue en el borde del carrusel. Un tile de 200px con
+   stitchTiles repetido no tiene ese problema y además rinde mejor. */
+.paper-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+.paper-dots {
+  background-image: radial-gradient(oklch(55% 0.02 60 / 0.15) 1.4px, transparent 1.4px);
+  background-size: 26px 26px;
+}
+
+@keyframes bounceArrow {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(6px);
   }
 }
 
-.vertical-timeline {
-  max-width: 100% !important;
-  width: 100% !important;
+.animate-bounce-arrow {
+  animation: bounceArrow 1.2s ease-in-out infinite alternate;
 }
 
-.vertical-timeline-element-content h2 {
-  color: #e2e8f0 !important;
-}
-
-#tsparticles {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-bounce-arrow {
+    animation: none;
+  }
 }

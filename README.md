@@ -16,6 +16,6 @@ Este es mi portfolio personal. Acá muestro los proyectos que voy haciendo, las 
 ![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)
 
 ### 🛠️ Otros
-- **react-vertical-timeline-component** (Componente línea de tiempo)
 - **framer-motion** (Animaciones)
-- **tsParticles** (Efectos visuales)
+- **react-icons** (Íconos)
+- **Fraunces / Source Sans 3 / JetBrains Mono** (Tipografías, vía Google Fonts)

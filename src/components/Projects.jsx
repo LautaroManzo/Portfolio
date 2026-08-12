@@ -1,39 +1,19 @@
-import { useState, useRef, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+
+import SectionHeader from "./Others/SectionHeader";
 import ProjectCard from "./ProjectCard";
 import { projects } from "../data/projects";
 
-const slideVariants = {
-  enter: (dir) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (dir) => ({ x: dir < 0 ? "100%" : "-100%", opacity: 0 }),
-};
-
-const SWIPE_THRESHOLD = 50;
+const SWIPE_THRESHOLD = 60;
 
 const Projects = () => {
-  const [[current, direction], setCurrent] = useState([0, 0]);
-  const measureRef = useRef(null);
-  const [carouselHeight, setCarouselHeight] = useState("auto");
+  const [current, setCurrent] = useState(0);
+  const total = projects.length;
 
-  useEffect(() => {
-    const measure = () => {
-      if (!measureRef.current) return;
-      let max = 0;
-      for (const child of measureRef.current.children) {
-        max = Math.max(max, child.offsetHeight);
-      }
-      if (max > 0) setCarouselHeight(max);
-    };
-
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
-  const paginate = (dir) => {
-    setCurrent(([prev]) => [(prev + dir + projects.length) % projects.length, dir]);
-  };
+  const goTo = (i) => setCurrent(((i % total) + total) % total);
+  const paginate = (dir) => goTo(current + dir);
 
   const handleDragEnd = (_, info) => {
     if (info.offset.x < -SWIPE_THRESHOLD) paginate(1);
@@ -41,60 +21,77 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="w-full px-6 py-16">
-
-      <div className="mb-10">
-        <h2 className="text-3xl sm:text-4xl font-bold text-dark flex items-center gap-6">
-          Mis proyectos
-          <span className="flex-1 h-px bg-gradient-to-r from-primary/40 to-transparent hidden sm:block" />
-        </h2>
+    <section
+      id="proyectos"
+      className="relative flex flex-col justify-center min-h-svh md:h-svh box-border border-t border-divider px-6 py-12 md:px-16 md:py-14 xl:px-20"
+    >
+      <div className="shrink-0 mb-10">
+        <SectionHeader kicker="PROYECTOS" title="Algunas cosas que construí" />
       </div>
 
-      {/* Contenedor oculto para medir la altura natural de cada card */}
-      <div ref={measureRef} className="absolute invisible pointer-events-none w-[calc(100%-3rem)]">
-        {projects.map((p, i) => (
-          <ProjectCard key={i} {...p} />
+      {/* Alto estimado para que la card (imagen 3:2 a 640px + contenido) entre
+          sin scroll interno; se ajusta con una verificación visual. */}
+      <div className="relative max-w-[1080px] xl:max-w-[1240px] 2xl:max-w-[1400px] w-full mx-auto h-[780px] md:h-[400px] flex items-center gap-3 md:gap-5">
+        <button
+          onClick={() => paginate(-1)}
+          aria-label="Proyecto anterior"
+          className="w-10 h-10 shrink-0 flex items-center justify-center bg-transparent border-none text-ink-muted cursor-pointer transition-colors duration-300 hover:text-accent"
+        >
+          <FiChevronLeft className="w-[26px] h-[26px] md:w-[30px] md:h-[30px]" strokeWidth={1.5} />
+        </button>
+
+        {/* rounded-lg: al deslizarse, las cards quedan cortadas por este
+            contenedor. Sin redondeo, el corte es una recta vertical y se lee
+            como si la card perdiera sus esquinas durante la transición. */}
+        <div className="relative flex-1 h-full overflow-hidden rounded-lg">
+          {/* Capa de arrastre: framer-motion controla su propio transform,
+              por eso el desplazamiento del track va en un div interno. */}
+          <motion.div
+            className="h-full cursor-grab active:cursor-grabbing"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.12}
+            dragSnapToOrigin
+            onDragEnd={handleDragEnd}
+          >
+            <div
+              className="flex h-full transition-transform duration-[450ms] ease-out"
+              style={{ transform: `translateX(-${current * 100}%)` }}
+            >
+              {projects.map((project) => (
+                <div
+                  key={project.id}
+                  className="w-full shrink-0 h-full px-2.5 box-border"
+                >
+                  <ProjectCard {...project} />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        <button
+          onClick={() => paginate(1)}
+          aria-label="Siguiente proyecto"
+          className="w-10 h-10 shrink-0 flex items-center justify-center bg-transparent border-none text-ink-muted cursor-pointer transition-colors duration-300 hover:text-accent"
+        >
+          <FiChevronRight className="w-[26px] h-[26px] md:w-[30px] md:h-[30px]" strokeWidth={1.5} />
+        </button>
+      </div>
+
+      {/* Dots */}
+      <div className="relative shrink-0 flex justify-center gap-2 mt-6">
+        {projects.map((project, i) => (
+          <button
+            key={project.id}
+            onClick={() => goTo(i)}
+            aria-label={`Ir al proyecto ${i + 1}`}
+            className={`w-2 h-2 rounded-full border-none p-0 cursor-pointer transition-colors duration-300 ${
+              i === current ? "bg-accent" : "bg-[oklch(60%_0.02_60/0.35)]"
+            }`}
+          />
         ))}
       </div>
-
-      <div className="w-full flex flex-col items-center gap-5">
-        <div className="overflow-hidden w-full" style={{ height: carouselHeight }}>
-          <AnimatePresence custom={direction} mode="wait">
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ type: "tween", duration: 0.2, ease: "easeInOut" }}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.1}
-              onDragEnd={handleDragEnd}
-              className="cursor-grab active:cursor-grabbing h-full"
-            >
-              <ProjectCard {...projects[current]} />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="flex gap-2">
-          {projects.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(([prev]) => [i, i > prev ? 1 : -1])}
-              className={`rounded-full transition-all duration-200 ${
-                i === current
-                  ? "w-5 h-2 bg-primary"
-                  : "w-2 h-2 bg-primary/30 hover:bg-primary/60"
-              }`}
-              aria-label={`Ir al proyecto ${i + 1}`}
-            />
-          ))}
-        </div>
-      </div>
-
     </section>
   );
 };

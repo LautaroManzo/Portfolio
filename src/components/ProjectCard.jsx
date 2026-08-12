@@ -1,75 +1,100 @@
-import { FaGithub, FaCode } from "react-icons/fa";
-import { FaCirclePlay } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import { FiArrowUpRight } from "react-icons/fi";
 
-const ProjectCard = ({ title, description, image, alt, techs = [], github, demo, footer, objectPosition = "top" }) => {
+const ProjectCard = ({
+  title,
+  date,
+  description,
+  image,
+  alt,
+  techs = [],
+  github,
+  demo,
+}) => {
   return (
-    <div className="flex flex-col sm:flex-row bg-accent-light border border-white/8 hover:border-primary/30 rounded-2xl shadow-xl overflow-hidden w-full h-full transition-colors duration-300">
+    // Sombra sin derrame lateral: el spread negativo (-30) cubre la cola del
+    // blur (~2σ = 32px), así no se cuela en el gutter de 10px del slide.
+    //
+    // Imagen izquierda / contenido derecha, como el diseño original — pero la
+    // celda de imagen ya no fuerza un ancho fijo (eso la dejaba angosta y alta,
+    // ≈0,88:1, chocando con cualquier screenshot real de una app web,
+    // ≈1,5–2,2:1). Ahora mide aspect-[3/2] con el ALTO fijado a h-full: el
+    // ancho sale solo de esa proporción, así que la celda siempre tiene la
+    // forma correcta sin importar la resolución (aspect-ratio es relativo, no
+    // depende de píxeles de viewport). En mobile se apila arriba y es al revés:
+    // ancho fijo (w-full), alto derivado.
+    <div className="h-full bg-card border border-line rounded-lg overflow-hidden shadow-[0_18px_32px_-30px_oklch(30%_0.03_60/0.45)] flex flex-col md:flex-row">
 
-      <div className="w-full h-[200px] shrink-0 overflow-hidden sm:w-2/5 sm:h-full">
-        {image ? (
+      {/* Captura. Sin imagen queda solo el fondo, sin placeholder. */}
+      <div className="w-full aspect-[3/2] md:w-auto md:h-full shrink-0 overflow-hidden bg-chip">
+        {image && (
           <img
             src={image}
             alt={alt}
             draggable="false"
-            className={`w-full h-full object-cover object-${objectPosition} transition-transform duration-500 hover:scale-105`}
+            className="w-full h-full object-cover"
           />
-        ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-primary/20 via-primary/8 to-accent-light">
-            <FaCode className="text-dark/60 text-2xl" />
-            <span className="text-sm text-dark/80 font-mono tracking-[0.3em] uppercase">Próximamente</span>
-          </div>
         )}
       </div>
 
-      <div className="flex flex-col justify-between gap-6 p-6 sm:w-3/5 flex-1 min-h-0">
-
-        <div className="flex flex-col gap-4">
-          <div>
-            <h3 className="text-lg sm:text-xl font-bold text-dark">{title}</h3>
-            <p className="text-sm text-muted mt-2 leading-relaxed">{description}</p>
+      {/* Contenido */}
+      <div className="flex-1 min-w-0 px-5 py-4 md:px-7 md:py-4 flex flex-col justify-center overflow-y-auto box-border">
+        {date && (
+          <div className="font-mono text-xs tracking-[0.03em] text-ink-muted mb-1">
+            {date}
           </div>
+        )}
 
-          {techs.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {techs.map((tech, i) => (
-                <span key={i} className="px-3 py-1 text-[10px] sm:text-xs font-semibold text-primary bg-bg rounded-full border border-primary/25">
-                  {tech}
-                </span>
-              ))}
-            </div>
-          )}
+        <div className="font-display text-2xl font-semibold text-ink mb-1.5">
+          {title}
         </div>
 
-        <div className="flex flex-col gap-2">
-          {(github || demo) && (
-            <div className="flex gap-3 sm:flex-none sm:w-auto w-full">
-              {github && (
-                <a
-                  href={github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex justify-center items-center sm:w-9 sm:h-9 sm:rounded-full rounded-full border border-primary/50 text-muted transition-all duration-300 hover:border-primary hover:text-primary sm:flex-none flex-[3] py-2"
-                >
-                  <FaGithub />
-                </a>
-              )}
-              {demo && (
-                <a
-                  href={demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-primary text-bg font-semibold text-sm border-2 border-primary transition-all duration-300 hover:bg-transparent hover:text-primary sm:flex-none flex-[7]"
-                >
-                  <FaCirclePlay /> Ver demo
-                </a>
-              )}
-            </div>
-          )}
-          {footer && (
-            <span className="text-xs text-muted/60 italic">{footer}</span>
-          )}
-        </div>
+        <p className="text-[15px] leading-[1.45] text-ink-soft m-0 mb-2.5">
+          {description}
+        </p>
 
+        {techs.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-2.5">
+            {techs.map((tech) => (
+              <span
+                key={tech}
+                className="font-mono text-xs tracking-[0.02em] text-ink-muted bg-chip border border-line px-3 py-[5px] rounded-full"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {(github || demo) && (
+          <div className="flex items-center gap-4">
+            {github && (
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Código de ${title} en GitHub`}
+                className="inline-flex items-center justify-center w-[34px] h-[34px] rounded-full border border-line-strong text-ink-soft transition-colors duration-300 hover:border-accent hover:text-accent"
+              >
+                <FaGithub size={16} />
+              </a>
+            )}
+            {demo && (
+              <a
+                href={demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-0.5 font-mono text-sm font-medium text-accent no-underline hover:underline"
+              >
+                Ver proyecto
+                {/* 22, no 14: la flecha de Feather ocupa apenas 10 de las 24
+                    unidades de su viewBox, así que a size 14 quedaban 5,8px de
+                    tinta contra los 15,5px del ícono de GitHub de al lado. */}
+                <FiArrowUpRight size={22} />
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
