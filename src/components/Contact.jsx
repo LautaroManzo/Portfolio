@@ -29,7 +29,10 @@ const Contact = () => {
   return (
     <section
       id="contacto"
-      className="relative flex flex-col justify-center min-h-svh box-border border-t border-divider px-6 py-10 md:px-16 md:py-14 xl:px-20"
+      // Más aire en mobile (py-14, gap-12 y márgenes internos más generosos)
+      // que en desktop — se sentía apretado con los mismos números ajustados
+      // de la columna angosta de escritorio.
+      className="relative flex flex-col justify-center min-h-svh box-border border-t border-divider px-4 py-14 md:px-16 md:py-14 xl:px-20"
     >
       {/* Tinte de sección alterna: va sobre la textura de papel, debajo del
           contenido (que es relative y por eso pinta encima). */}
@@ -39,7 +42,7 @@ const Contact = () => {
           contenedor con scroll la recortaría. */}
       {/* Columnas auto + justify-center: se achican al ancho de su contenido y
           quedan juntas en el medio, en vez de estirarse hacia los bordes. */}
-      <div className="relative w-full mx-auto min-h-0 grid grid-cols-1 md:grid-cols-[auto_auto] gap-10 md:gap-14 xl:gap-16 items-center justify-center">
+      <div className="relative w-full mx-auto min-h-0 grid grid-cols-1 md:grid-cols-[auto_auto] gap-12 md:gap-14 xl:gap-16 items-center justify-center">
 
         <motion.div
           className="text-center md:text-left"
@@ -48,13 +51,13 @@ const Contact = () => {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.55, ease: "easeOut" }}
         >
-          <div className="font-mono text-[13px] tracking-[0.24em] font-medium text-accent mb-4">
+          <div className="font-mono text-[13px] tracking-[0.24em] font-medium text-accent mb-5 md:mb-4">
             CONTACTO
           </div>
-          <h2 className="font-display text-[30px] md:text-[56px] xl:text-[62px] leading-[1.08] font-semibold text-ink m-0 mb-6">
+          <h2 className="font-display text-[30px] md:text-[56px] xl:text-[62px] leading-[1.08] font-semibold text-ink m-0 mb-7 md:mb-6">
             Dónde encontrarme
           </h2>
-          <p className="text-[15px] md:text-[19px] leading-[1.65] text-ink-soft max-w-[480px] xl:max-w-[540px] mx-auto md:mx-0 mb-10">
+          <p className="text-[15px] md:text-[19px] leading-[1.75] md:leading-[1.65] text-ink-soft max-w-[480px] xl:max-w-[540px] mx-auto md:mx-0 mb-11 md:mb-10">
             Si querés consultarme algo o simplemente escribirme
           </p>
           <a
@@ -76,11 +79,11 @@ const Contact = () => {
           transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
         >
           <div className="absolute -top-4 right-5 w-[90px] h-[30px] rotate-3 bg-tape shadow-[0_2px_4px_oklch(30%_0.03_60/0.15)] z-[2]" />
-          <div className="bg-card-warm border border-line rounded-[4px] px-8 py-9 md:px-[46px] md:py-[42px] shadow-[0_24px_50px_-24px_oklch(30%_0.03_60/0.4)]">
-            <div className="font-mono text-xs tracking-[0.06em] text-ink-muted mb-6 pb-[18px] border-b border-dashed border-line-strong">
+          <div className="bg-card-warm border border-line rounded-[4px] px-9 py-10 md:px-[46px] md:py-[42px] shadow-[0_24px_50px_-24px_oklch(30%_0.03_60/0.4)]">
+            <div className="font-mono text-xs tracking-[0.06em] text-ink-muted mb-7 pb-5 md:mb-6 md:pb-[18px] border-b border-dashed border-line-strong">
               TAMBIÉN ESTOY EN
             </div>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-7 md:gap-6">
               {LINKS.map(({ icon: Icon, iconSize, label, handle, href }) => (
                 <a
                   key={label}

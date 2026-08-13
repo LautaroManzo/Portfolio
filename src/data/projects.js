@@ -1,6 +1,14 @@
 import adivinaLaPalabra from "../assets/images/adivinaLaPalabra.png";
+import adivinaLaPalabra2 from "../assets/images/adivinaLaPalabra-2.png";
+import adivinaLaPalabra4 from "../assets/images/adivinaLaPalabra-4.png";
 import dolarinfohoy from "../assets/images/dolarinfohoy.png";
+import dolarinfohoy2 from "../assets/images/dolarinfohoy-2.png";
+import dolarinfohoy3 from "../assets/images/dolarinfohoy-3.png";
+import dolarinfohoy4 from "../assets/images/dolarinfohoy-4.png";
+import dolarinfohoy5 from "../assets/images/dolarinfohoy-5.png";
 import teLoResumo from "../assets/images/teLoResumo.png";
+import teLoResumo2 from "../assets/images/teLoResumo-2.png";
+import teLoResumo3 from "../assets/images/teLoResumo-3.png";
 
 // Ordenados de más reciente a más antiguo.
 export const projects = [
@@ -8,8 +16,8 @@ export const projects = [
     id: 3,
     title: "Te lo resumo",
     date: "2026",
-    description: "Resumidor con IA: subís un PDF, Word, texto, un link o un video de YouTube y devuelve un resumen claro, con un modo 'Plan de estudio' (mapa conceptual y preguntas). En producción uso Gemini, por su plan gratuito. Lo hice para inventar algo propio y aprender sobre arquitecturas de software; lo más difícil fue la transcripción de YouTube.",
-    image: teLoResumo,
+    description: "Resumidor con IA: subís un PDF, un link o un video de YouTube y devuelve un resumen claro, con un modo 'Plan de estudio' con mapa conceptual y preguntas. Lo hice para interiorizarme en arquitecturas de software. Lo más difícil fue la transcripción de YouTube.",
+    images: [teLoResumo, teLoResumo2, teLoResumo3],
     alt: "Te lo resumo",
     techs: [".NET", "React", "Gemini", "Vercel"],
     github: "https://github.com/LautaroManzo/DocBrief",
@@ -19,8 +27,8 @@ export const projects = [
     id: 2,
     title: "Dólar info hoy",
     date: "2025",
-    description: "Cotizaciones del dólar en tiempo real, con histórico y calculadora. Un flujo de n8n trae noticias de NewsAPI, las resume con Gemini y las guarda en Supabase, y un bot de Telegram manda las cotizaciones a diario. Lo hice para aprender Next.js y probar un deploy más ágil que en C#; lo más difícil fue encontrar APIs que devolvieran lo que necesitaba.",
-    image: dolarinfohoy,
+    description: "Cotizaciones del dólar en tiempo real, con histórico y calculadora. Un flujo de n8n trae noticias, las resume con Gemini y las guarda en Supabase, y un bot de Telegram las manda a diario. Lo hice para aprender Next.js. Lo más difícil fue encontrar APIs que sirvieran.",
+    images: [dolarinfohoy, dolarinfohoy5, dolarinfohoy2, dolarinfohoy3, dolarinfohoy4],
     alt: "Dólar info hoy",
     // Máximo 4: con más, el contenedor de chips parte en dos filas y a ciertos
     // anchos deja una sola cápsula huérfana en el segundo renglón. n8n y
@@ -36,7 +44,7 @@ export const projects = [
     title: "Adiviná la palabra",
     date: "2024",
     description: "Mi propia versión de Wordle: jugaba al original y quise hacer una con algunos cambios y modos nuevos. Fue de los primeros proyectos que hice, para aprender. Lo que más me costó fue el despliegue, que terminé resolviendo con Docker.",
-    image: adivinaLaPalabra,
+    images: [adivinaLaPalabra, adivinaLaPalabra2, adivinaLaPalabra4],
     alt: "Adiviná la palabra",
     techs: [".NET", "Razor", "PostgreSQL", "Docker"],
     github: "https://github.com/LautaroManzo/AdivinaLaPalabra",

@@ -12,7 +12,7 @@ const LineTime = () => {
   return (
     <section
       id="trayectoria"
-      className="relative flex flex-col justify-center min-h-svh box-border border-t border-divider px-6 py-12 md:px-16 md:py-12 xl:px-20"
+      className="relative flex flex-col justify-center min-h-svh box-border border-t border-divider px-4 py-12 md:px-16 md:py-12 xl:px-20"
     >
       {/* Tinte de sección alterna: va sobre la textura de papel, debajo del
           contenido (que es relative y por eso pinta encima). */}

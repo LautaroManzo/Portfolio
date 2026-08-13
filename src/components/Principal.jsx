@@ -22,8 +22,11 @@ const Principal = () => {
       id="inicio"
       className="relative flex flex-col min-h-[calc(100svh-4rem)] md:min-h-[calc(100svh-5rem)]"
     >
-      <div className="relative flex-1 min-h-0 flex items-center max-w-[1240px] xl:max-w-[1400px] 2xl:max-w-[1560px] mx-auto w-full px-6 py-4 md:px-16 md:py-6 xl:px-20">
-        <div className="w-full grid grid-cols-1 md:grid-cols-[auto_auto] gap-6 md:gap-[60px] xl:gap-[90px] items-center justify-center justify-items-center md:justify-items-start">
+      {/* Más aire en mobile (py-8, gap-10): con los mismos números ajustados
+          de desktop se sentía todo compactado — kicker, foto y texto muy
+          pegados entre sí. */}
+      <div className="relative flex-1 min-h-0 flex items-center max-w-[1240px] xl:max-w-[1400px] 2xl:max-w-[1560px] mx-auto w-full px-4 py-8 md:px-16 md:py-6 xl:px-20">
+        <div className="w-full grid grid-cols-1 md:grid-cols-[auto_auto] gap-10 md:gap-[60px] xl:gap-[90px] items-center justify-center justify-items-center md:justify-items-start">
 
           {/* Foto tipo polaroid */}
           <motion.div
@@ -59,7 +62,7 @@ const Principal = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
           >
-            <div className="flex items-center justify-center md:justify-start gap-3.5 flex-wrap mb-5">
+            <div className="flex items-center justify-center md:justify-start gap-3.5 flex-wrap mb-6 md:mb-5">
               <span className="font-mono text-xs tracking-[0.24em] font-medium text-accent">
                 DESARROLLADOR .NET
               </span>
@@ -69,12 +72,12 @@ const Principal = () => {
               </span>
             </div>
 
-            <h1 className="font-display text-[38px] md:text-[68px] leading-[1.05] font-semibold text-ink tracking-[-0.015em] m-0 mb-6">
+            <h1 className="font-display text-[38px] md:text-[68px] leading-[1.05] font-semibold text-ink tracking-[-0.015em] m-0 mb-7 md:mb-6">
               Lautaro <span className="text-accent-strong">Manzo</span>
             </h1>
 
-            <p className="text-[15px] md:text-[18px] xl:text-[19px] leading-[1.65] text-ink-soft max-w-full md:max-w-[500px] xl:max-w-[560px] mx-auto md:mx-0 mb-8">
-              Arranqué en 2020 con un curso de HTML y CSS; hace{" "}
+            <p className="text-[15px] md:text-[18px] xl:text-[19px] leading-[1.75] md:leading-[1.65] text-ink-soft max-w-full md:max-w-[500px] xl:max-w-[560px] mx-auto md:mx-0 mb-9 md:mb-8">
+              Arranqué en 2020 con un curso de HTML y CSS. Hace{" "}
               <strong className="text-ink">más de 4 años</strong> que trabajo en
               desarrollo. Acá abajo están mi trayectoria y los proyectos que fui
               haciendo por mi cuenta.

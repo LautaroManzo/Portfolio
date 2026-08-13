@@ -1,64 +1,138 @@
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const ProjectCard = ({
   title,
   date,
   description,
-  image,
+  images = [],
   alt,
   techs = [],
   github,
   demo,
 }) => {
-  return (
-    // Sombra sin derrame lateral: el spread negativo (-30) cubre la cola del
-    // blur (~2σ = 32px), así no se cuela en el gutter de 10px del slide.
-    //
-    // Imagen izquierda / contenido derecha, como el diseño original — pero la
-    // celda de imagen ya no fuerza un ancho fijo (eso la dejaba angosta y alta,
-    // ≈0,88:1, chocando con cualquier screenshot real de una app web,
-    // ≈1,5–2,2:1). Ahora mide aspect-[3/2] con el ALTO fijado a h-full: el
-    // ancho sale solo de esa proporción, así que la celda siempre tiene la
-    // forma correcta sin importar la resolución (aspect-ratio es relativo, no
-    // depende de píxeles de viewport). En mobile se apila arriba y es al revés:
-    // ancho fijo (w-full), alto derivado.
-    <div className="h-full bg-card border border-line rounded-lg overflow-hidden shadow-[0_18px_32px_-30px_oklch(30%_0.03_60/0.45)] flex flex-col md:flex-row">
+  const [imgIndex, setImgIndex] = useState(0);
+  const hasMultiple = images.length > 1;
 
-      {/* Captura. Sin imagen queda solo el fondo, sin placeholder. */}
-      <div className="w-full aspect-[3/2] md:w-auto md:h-full shrink-0 overflow-hidden bg-chip">
-        {image && (
-          <img
-            src={image}
-            alt={alt}
-            draggable="false"
-            className="w-full h-full object-cover"
-          />
+  // stopPropagation: la card entera tiene el hover-zoom activado por `group`,
+  // y estas flechas viven encima de la imagen — sin esto, un click también
+  // dispararía cualquier handler de click que tenga un ancestro (no lo hay
+  // hoy, pero evita el problema si se agrega uno).
+  const goPrev = (e) => {
+    e.stopPropagation();
+    setImgIndex((i) => (i - 1 + images.length) % images.length);
+  };
+  const goNext = (e) => {
+    e.stopPropagation();
+    setImgIndex((i) => (i + 1) % images.length);
+  };
+
+  return (
+    // Imagen siempre arriba, texto siempre abajo — en cualquier resolución.
+    // Con aspect-ratio fijo en la imagen y alto de card automático (según su
+    // contenido), no hay ninguna caja de ancho/alto peleando entre sí: cada
+    // card mide lo que necesita su propio texto, y la imagen nunca se recorta
+    // más de lo que marca su aspect-ratio. Esto reemplaza al carrusel
+    // imagen-izquierda/texto-derecha, que forzaba una fila de alto fijo y
+    // terminaba recortando la imagen mal en resoluciones intermedias.
+    <motion.div
+      // max-w + mx-auto solo importa en el tramo de 1 columna (debajo de lg):
+      // ahí la card ocupa todo el ancho del contenedor, y con aspect-[3/2] la
+      // imagen se volvía enorme. Achica la card y la centra en vez de dejarla
+      // a ancho completo. En lg+ (3 columnas) el ancho ya lo define el grid,
+      // así que se anula el tope.
+      //
+      className="group h-full max-w-[480px] mx-auto lg:max-w-none lg:mx-0 w-full bg-card border border-line rounded-lg overflow-hidden shadow-[0_8px_20px_-14px_oklch(30%_0.03_60/0.35)] flex flex-col"
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      {/* Captura(s). Sin imágenes queda solo el fondo, sin placeholder. Con
+          más de una, aparecen flechas al hover (mismo patrón que el resto
+          del sitio: controles que no compiten por espacio hasta que se
+          necesitan). Sin dots: en la práctica molestaban más de lo que
+          aportaban. Sin el track-con-clones del carrusel viejo: acá alcanza
+          con cambiar el índice, porque son pocas imágenes por proyecto y no
+          hace falta loop infinito ni arrastre. */}
+      <div className="relative w-full aspect-[3/2] shrink-0 overflow-hidden bg-chip">
+        {/* mode="wait" (por defecto en versiones previas) esperaba a que la
+            imagen vieja terminara de desvanecerse para recién ahí montar la
+            nueva — en el medio se veía el fondo de la card. Con position
+            absolute + inset-0 las dos quedan superpuestas en el mismo lugar,
+            así el fade-in de la nueva ocurre en simultáneo con el fade-out
+            de la vieja, sin hueco de por medio. */}
+        {images.length > 0 && (
+          <AnimatePresence initial={false}>
+            <motion.img
+              key={imgIndex}
+              src={images[imgIndex]}
+              alt={alt}
+              draggable="false"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </AnimatePresence>
+        )}
+
+        {hasMultiple && (
+          <>
+            {/* drop-shadow en vez de un fondo circular: sin la píldora
+                detrás, la flecha necesita algo que la separe del contenido
+                de la captura debajo, sea claro u oscuro. */}
+            <button
+              onClick={goPrev}
+              aria-label="Imagen anterior"
+              className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center text-ink drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer bg-transparent border-none p-1"
+            >
+              <FiChevronLeft size={20} />
+            </button>
+            <button
+              onClick={goNext}
+              aria-label="Imagen siguiente"
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center text-ink drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer bg-transparent border-none p-1"
+            >
+              <FiChevronRight size={20} />
+            </button>
+          </>
         )}
       </div>
 
-      {/* Contenido */}
-      <div className="flex-1 min-w-0 px-5 py-4 md:px-7 md:py-4 flex flex-col justify-center overflow-y-auto box-border">
-        {date && (
-          <div className="font-mono text-xs tracking-[0.03em] text-ink-muted mb-1">
-            {date}
-          </div>
-        )}
-
-        <div className="font-display text-2xl font-semibold text-ink mb-1.5">
+      {/* Card vertical siempre (imagen arriba, texto abajo) en cualquier
+          resolución: se centra todo el contenido, no solo en mobile.
+          justify-evenly reparte el aire sobrante (por la card estirada a la
+          altura de la más alta de su fila) en partes iguales entre todos los
+          elementos, en vez de que quede un solo hueco gigante antes del
+          botón. Los mb-* que quedan son un piso mínimo para cuando casi no
+          sobra espacio (la descripción más larga). */}
+      <div className="flex-1 min-w-0 px-6 py-5 flex flex-col justify-evenly items-center text-center">
+        {/* Título y fecha como texto normal (no flex): con el título largo
+            partiéndose en dos líneas, un flex con items-baseline dejaba la
+            fecha flotando sola al lado de la primera línea en vez de después
+            del título. Como texto en línea, la fecha simplemente sigue el
+            flujo normal del párrafo. */}
+        <div className="font-display text-2xl font-semibold text-ink mb-2">
           {title}
+          {date && (
+            <span className="font-mono text-xs tracking-[0.03em] font-normal text-ink-muted"> ({date})</span>
+          )}
         </div>
 
-        <p className="text-[15px] leading-[1.45] text-ink-soft m-0 mb-2.5">
+        <p className="text-[15px] leading-[1.55] text-ink-soft m-0 mb-3">
           {description}
         </p>
 
         {techs.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-2.5">
+          <div className="flex flex-wrap justify-center gap-2 mb-3">
             {techs.map((tech) => (
               <span
                 key={tech}
-                className="font-mono text-xs tracking-[0.02em] text-ink-muted bg-chip border border-line px-3 py-[5px] rounded-full"
+                className="font-mono text-[10px] md:text-xs tracking-[0.02em] text-ink-muted bg-chip border border-line px-3 py-[5px] rounded-full"
               >
                 {tech}
               </span>
@@ -67,7 +141,7 @@ const ProjectCard = ({
         )}
 
         {(github || demo) && (
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center gap-4">
             {github && (
               <a
                 href={github}
@@ -96,7 +170,7 @@ const ProjectCard = ({
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
