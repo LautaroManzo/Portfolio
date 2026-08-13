@@ -31,11 +31,10 @@ export const projects = [
     images: [dolarinfohoy, dolarinfohoy5, dolarinfohoy2, dolarinfohoy3, dolarinfohoy4],
     alt: "Dólar info hoy",
     // Máximo 4: con más, el contenedor de chips parte en dos filas y a ciertos
-    // anchos deja una sola cápsula huérfana en el segundo renglón. n8n y
-    // Tailwind quedan fuera porque n8n ya se nombra en la descripción y Tailwind
-    // no distingue nada. Next.js queda afuera por React: alguien que escanea
-    // chips no infiere que Next.js implica React si no conoce esa relación.
-    techs: ["React", "TypeScript", "Supabase", "Gemini"],
+    // anchos deja una sola cápsula huérfana en el segundo renglón. Next.js
+    // queda afuera por React: alguien que escanea chips no infiere que
+    // Next.js implica React si no conoce esa relación.
+    techs: ["React", "n8n", "Supabase", "Gemini"],
     github: "https://github.com/LautaroManzo/dolar-hoy-lm",
     demo: "https://www.dolarinfohoy.com.ar/",
   },

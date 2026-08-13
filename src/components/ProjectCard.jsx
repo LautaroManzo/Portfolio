@@ -132,7 +132,7 @@ const ProjectCard = ({
             {techs.map((tech) => (
               <span
                 key={tech}
-                className="font-mono text-[10px] md:text-xs tracking-[0.02em] text-ink-muted bg-chip border border-line px-3 py-[5px] rounded-full"
+                className="font-mono text-[9px] md:text-xs tracking-[0.02em] text-ink-muted bg-chip border border-line px-2.5 py-1 md:px-3 md:py-[5px] rounded-full"
               >
                 {tech}
               </span>
