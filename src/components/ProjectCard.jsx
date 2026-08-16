@@ -44,7 +44,12 @@ const ProjectCard = ({
       // a ancho completo. En lg+ (3 columnas) el ancho ya lo define el grid,
       // así que se anula el tope.
       //
-      className="group h-full max-w-[480px] mx-auto lg:max-w-none lg:mx-0 w-full bg-card border border-line rounded-lg overflow-hidden shadow-[0_8px_20px_-14px_oklch(30%_0.03_60/0.35)] flex flex-col"
+      // md:max-w-[640px]: en el tramo intermedio (tablet, ~768-1023px) el
+      // tope de 480px dejaba la única card centrada con ~200px vacíos a cada
+      // lado — casi la mitad del ancho sin usar. 640px aprovecha mucho mejor
+      // ese espacio sin volver a 2 columnas (con 3 proyectos, 2 columnas deja
+      // el tercero solo en su fila).
+      className="group h-full max-w-[480px] md:max-w-[640px] mx-auto lg:max-w-none lg:mx-0 w-full bg-card border border-line rounded-lg overflow-hidden shadow-[var(--shadow-card)] flex flex-col"
       initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -71,6 +76,7 @@ const ProjectCard = ({
               src={images[imgIndex]}
               alt={alt}
               draggable="false"
+              loading="lazy"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -82,20 +88,25 @@ const ProjectCard = ({
 
         {hasMultiple && (
           <>
-            {/* drop-shadow en vez de un fondo circular: sin la píldora
+            {/* Franja de arriba a abajo, no un botón chico centrado: en
+                mobile es mucho más fácil acertarle a "todo el borde
+                izquierdo/derecho de la imagen" que a un ícono de 20px.
+                drop-shadow en vez de un fondo circular: sin la píldora
                 detrás, la flecha necesita algo que la separe del contenido
-                de la captura debajo, sea claro u oscuro. */}
+                de la captura debajo, sea claro u oscuro. Visible siempre en
+                mobile (group-hover no es confiable con touch) y solo al
+                hover en desktop (md+). */}
             <button
               onClick={goPrev}
               aria-label="Imagen anterior"
-              className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center justify-center text-ink drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer bg-transparent border-none p-1"
+              className="carousel-arrow absolute left-0 top-0 h-full w-12 flex items-center justify-start pl-1.5 text-ink drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] cursor-pointer bg-transparent border-none"
             >
               <FiChevronLeft size={20} />
             </button>
             <button
               onClick={goNext}
               aria-label="Imagen siguiente"
-              className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center text-ink drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer bg-transparent border-none p-1"
+              className="carousel-arrow absolute right-0 top-0 h-full w-12 flex items-center justify-end pr-1.5 text-ink drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] cursor-pointer bg-transparent border-none"
             >
               <FiChevronRight size={20} />
             </button>
@@ -132,7 +143,7 @@ const ProjectCard = ({
             {techs.map((tech) => (
               <span
                 key={tech}
-                className="font-mono text-[9px] md:text-xs tracking-[0.02em] text-ink-muted bg-chip border border-line px-2.5 py-1 md:px-3 md:py-[5px] rounded-full"
+                className="font-mono text-[11px] md:text-xs tracking-[0.02em] text-ink-muted bg-chip border border-line px-2.5 py-1 md:px-3 md:py-[5px] rounded-full"
               >
                 {tech}
               </span>
@@ -148,9 +159,9 @@ const ProjectCard = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Código de ${title} en GitHub`}
-                className="inline-flex items-center justify-center w-[34px] h-[34px] rounded-full border border-line-strong text-ink-soft transition-colors duration-300 hover:border-accent hover:text-accent"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-line-strong text-ink-soft transition-colors duration-300 hover:border-accent hover:text-accent"
               >
-                <FaGithub size={16} />
+                <FaGithub size={18} />
               </a>
             )}
             {demo && (

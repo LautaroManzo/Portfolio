@@ -43,8 +43,8 @@ const Principal = () => {
                 proporción original de 0,909. */}
             <div className="relative w-[260px] md:w-[clamp(400px,53vh,580px)] -rotate-3 transition-transform duration-300 hover:-rotate-1 hover:scale-[1.015]">
               {/* Cinta adhesiva */}
-              <div className="absolute -top-[22px] left-1/2 -translate-x-1/2 -rotate-2 w-[110px] h-[34px] bg-tape shadow-[0_2px_4px_oklch(30%_0.03_60/0.15)] z-[2]" />
-              <div className="bg-card-warm rounded-[4px] p-[18px] pb-[60px] shadow-[0_30px_60px_-24px_oklch(30%_0.03_60/0.4),0_2px_4px_oklch(30%_0.03_60/0.15)]">
+              <div className="absolute -top-[22px] left-1/2 -translate-x-1/2 -rotate-2 w-[110px] h-[34px] bg-tape shadow-[var(--shadow-tape)] z-[2]" />
+              <div className="bg-card-warm rounded-[4px] p-[18px] pb-[60px] shadow-[var(--shadow-float)]">
                 <img
                   src={yo}
                   alt="Lautaro Manzo"
@@ -83,7 +83,14 @@ const Principal = () => {
               haciendo por mi cuenta.
             </p>
 
-            <div className="flex items-center justify-center md:justify-start flex-wrap md:flex-nowrap gap-4">
+            {/* flex-wrap, no md:flex-nowrap: al llegar a md (768px) el layout
+                pasa a 2 columnas (foto + texto) y la columna de texto se
+                angosta lo suficiente como para que "Descargar CV" + los 3
+                íconos no entren en una sola línea sin nowrap — eso generaba
+                overflow horizontal de página exactamente en ese breakpoint.
+                Con wrap siempre permitido (no forzado), en pantallas con
+                espacio de sobra sigue entrando todo en una línea igual. */}
+            <div className="flex items-center justify-center md:justify-start flex-wrap gap-4">
               <a
                 href="/Portfolio/cv-lm.pdf"
                 download
@@ -135,7 +142,7 @@ const Principal = () => {
         style={{ opacity: arrowOpacity }}
         aria-hidden="true"
       >
-        <FiArrowDown size={24} className="animate-bounce-arrow" />
+        <FiArrowDown size={24} className="animate-float-arrow" />
       </div>
     </section>
   );

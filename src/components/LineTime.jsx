@@ -44,7 +44,7 @@ const LineTime = () => {
       </div>
 
       {/* Card con la línea de tiempo */}
-      <div className="relative max-w-[760px] xl:max-w-[900px] 2xl:max-w-[1000px] w-full mx-auto bg-card border border-line rounded-lg px-[22px] py-7 md:px-12 md:py-10 shadow-[0_20px_50px_-28px_oklch(30%_0.03_60/0.4)]">
+      <div className="relative max-w-[760px] xl:max-w-[900px] 2xl:max-w-[1000px] w-full mx-auto bg-card border border-line rounded-lg px-[22px] py-7 md:px-12 md:py-10 shadow-[var(--shadow-lift)]">
         {visible.map((item, i) => {
           const isLast = i === visible.length - 1;
           return (

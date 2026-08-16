@@ -13,9 +13,11 @@
   --color-ink-soft: oklch(36% 0.02 60);
   --color-ink-muted: oklch(48% 0.02 60);
 
-  /* Acento */
-  --color-accent: oklch(45% 0.09 250);
-  --color-accent-strong: oklch(45% 0.1 250);
+  /* Acento: tinta azul-negra de estilográfica, no un azul de sistema —
+     más oscura y saturada que la anterior (era oklch(45% 0.09 250)) para
+     que se sienta parte de la familia "tinta" en vez de un color aparte. */
+  --color-accent: oklch(38% 0.13 262);
+  --color-accent-strong: oklch(33% 0.14 262);
 
   /* Decoración */
   /* Tinte de secciones alternas: se aplica ENCIMA de la textura de papel para
@@ -27,6 +29,15 @@
   --color-tape: oklch(78% 0.06 90 / 0.55);
   --color-line: oklch(60% 0.02 60 / 0.25);
   --color-line-strong: oklch(60% 0.02 60 / 0.4);
+  --color-dot: oklch(55% 0.02 60 / 0.15);
+
+  /* Sombras: una sola familia tonal (misma tinta que el resto de la
+     paleta, distinto alpha/blur/offset por rol), en vez de repetir el
+     literal oklch suelto en cada componente que la usa. */
+  --shadow-card: 0 8px 20px -14px oklch(30% 0.03 60 / 0.35);
+  --shadow-lift: 0 20px 50px -28px oklch(30% 0.03 60 / 0.4);
+  --shadow-float: 0 30px 60px -24px oklch(30% 0.03 60 / 0.4), 0 2px 4px oklch(30% 0.03 60 / 0.15);
+  --shadow-tape: 0 2px 4px oklch(30% 0.03 60 / 0.15);
 
   --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
@@ -64,11 +75,40 @@ body {
 }
 
 .paper-dots {
-  background-image: radial-gradient(oklch(55% 0.02 60 / 0.15) 1.4px, transparent 1.4px);
+  background-image: radial-gradient(var(--color-dot) 1.4px, transparent 1.4px);
   background-size: 26px 26px;
 }
 
-@keyframes bounceArrow {
+/* Flechas del carrusel de proyectos: visibles siempre por defecto (mobile,
+   sin hover) y solo al hacer hover en dispositivos que lo soportan. Regla
+   propia en vez de combinar utilities `opacity-*`/`md:opacity-*` de
+   Tailwind: dos utilities de igual especificidad en el mismo breakpoint
+   competían por el orden de generación del build y la que debía ganar en
+   desktop no lo hacía. */
+.carousel-arrow {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .carousel-arrow {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .group:hover .carousel-arrow {
+    opacity: 1;
+  }
+}
+
+/* Foco de teclado temático (acento azul tinta) en vez del anillo azul por
+   defecto del navegador, consistente con el resto del sistema. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Ease-out exponencial, no bounce/elastic: la flecha se desliza y frena, no
+   rebota. */
+@keyframes floatArrow {
   from {
     transform: translateY(0);
   }
@@ -77,15 +117,15 @@ body {
   }
 }
 
-.animate-bounce-arrow {
-  animation: bounceArrow 1.2s ease-in-out infinite alternate;
+.animate-float-arrow {
+  animation: floatArrow 1.4s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .animate-bounce-arrow {
+  .animate-float-arrow {
     animation: none;
   }
 }

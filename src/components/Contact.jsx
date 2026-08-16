@@ -78,8 +78,8 @@ const Contact = () => {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
         >
-          <div className="absolute -top-4 right-5 w-[90px] h-[30px] rotate-3 bg-tape shadow-[0_2px_4px_oklch(30%_0.03_60/0.15)] z-[2]" />
-          <div className="bg-card-warm border border-line rounded-[4px] px-9 py-10 md:px-[46px] md:py-[42px] shadow-[0_24px_50px_-24px_oklch(30%_0.03_60/0.4)]">
+          <div className="absolute -top-4 right-5 w-[90px] h-[30px] rotate-3 bg-tape shadow-[var(--shadow-tape)] z-[2]" />
+          <div className="bg-card-warm border border-line rounded-[4px] px-9 py-10 md:px-[46px] md:py-[42px] shadow-[var(--shadow-lift)]">
             <div className="font-mono text-xs tracking-[0.06em] text-ink-muted mb-7 pb-5 md:mb-6 md:pb-[18px] border-b border-dashed border-line-strong">
               TAMBIÉN ESTOY EN
             </div>
