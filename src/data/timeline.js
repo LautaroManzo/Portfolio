@@ -5,7 +5,7 @@ export const timelineItems = [
     title: "Desarrollador .NET",
     body: "EMMSA IT Services",
     description:
-      "Desarrollo y mantengo sistemas internos de la empresa y aplicaciones para clientes externos, además de APIs (donde aprendí a trabajar con JSON y XML) y reportes. Trabajo en .NET con Oracle, y en el frontend con Razor, MVC, jQuery y Kendo UI. También hago revisión de código y pruebas funcionales sobre los pull requests del equipo.",
+      "Desarrollo y mantengo aplicaciones para los clientes de la empresa, además de APIs (donde aprendí a trabajar con JSON y XML) y reportes. Trabajo en .NET con Oracle, y en el frontend con Razor, MVC, jQuery y Kendo UI. También hago revisión de código y pruebas funcionales sobre los pull requests del equipo.",
   },
   {
     cat: "job",
