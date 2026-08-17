@@ -21,7 +21,7 @@ const LINKS = [
     iconSize: 21,
     label: "LinkedIn",
     handle: "in/lautaro-manzo",
-    href: "https://www.linkedin.com/in/lautaro-manzo-57713a236/",
+    href: "https://www.linkedin.com/in/lautaro-manzo/",
   },
 ];
 

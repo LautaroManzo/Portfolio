@@ -27,7 +27,7 @@ export const projects = [
     id: 2,
     title: "Dólar info hoy",
     date: "2025",
-    description: "Cotizaciones del dólar en tiempo real, con histórico y calculadora. Un flujo de n8n trae noticias, las resume con Gemini y las guarda en Supabase, y un bot de Telegram las manda a diario. Lo hice para aprender Next.js. Lo más difícil fue encontrar APIs que sirvieran.",
+    description: "Cotizaciones del dólar en tiempo real, con histórico y calculadora. Un flujo de n8n trae noticias, las resume con Gemini y las guarda en Supabase. Un bot de Telegram manda las cotizaciones del día. Lo hice para aprender Next.js. Lo más difícil fue encontrar APIs que sirvieran.",
     images: [dolarinfohoy, dolarinfohoy5, dolarinfohoy2, dolarinfohoy3, dolarinfohoy4],
     alt: "Dólar info hoy",
     // Máximo 4: con más, el contenedor de chips parte en dos filas y a ciertos

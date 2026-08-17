@@ -93,7 +93,10 @@ const Principal = () => {
             <div className="flex items-center justify-center md:justify-start flex-wrap gap-4">
               <a
                 href="/Portfolio/cv-lm.pdf"
-                download
+                // Con `download` a secas el archivo baja como "cv-lm.pdf", que es
+                // el nombre interno del repo. Quien lo recibe lo guarda entre
+                // decenas de CVs, así que conviene que se identifique solo.
+                download="Lautaro-Manzo-CV.pdf"
                 className="inline-flex items-center gap-2.5 bg-ink text-paper h-14 px-[30px] rounded-[4px] text-[18px] font-semibold no-underline whitespace-nowrap transition-colors duration-300 hover:bg-ink-2"
               >
                 Descargar CV
@@ -115,7 +118,7 @@ const Principal = () => {
                   <FaGithub size={20} />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/lautaro-manzo-57713a236/"
+                  href="https://www.linkedin.com/in/lautaro-manzo/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
