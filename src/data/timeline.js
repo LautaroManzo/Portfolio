@@ -17,7 +17,7 @@ export const timelineItems = [
   {
     cat: "edu",
     time: "2021 - 2023",
-    title: "Técnico Superior en Programación",
+    title: "Técnico Universitario en Programación",
     body: "UTN - Universidad Tecnológica Nacional",
     description: "Me recibí en 2023.",
   },
