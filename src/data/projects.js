@@ -20,7 +20,7 @@ export const projects = [
     images: [teLoResumo, teLoResumo2, teLoResumo3],
     alt: "Te lo resumo",
     techs: [".NET", "React", "Gemini", "Vercel"],
-    github: "https://github.com/LautaroManzo/DocBrief",
+    github: "https://github.com/LautaroManzo/te-lo-resumo",
     demo: "https://te-lo-resumo.vercel.app",
   },
   {
@@ -35,7 +35,7 @@ export const projects = [
     // queda afuera por React: alguien que escanea chips no infiere que
     // Next.js implica React si no conoce esa relación.
     techs: ["React", "n8n", "Supabase", "Gemini"],
-    github: "https://github.com/LautaroManzo/dolar-hoy-lm",
+    github: "https://github.com/LautaroManzo/dolar-info-hoy",
     demo: "https://www.dolarinfohoy.com.ar/",
   },
   {
@@ -46,7 +46,7 @@ export const projects = [
     images: [adivinaLaPalabra, adivinaLaPalabra2, adivinaLaPalabra4],
     alt: "Adiviná la palabra",
     techs: [".NET", "Razor", "PostgreSQL", "Docker"],
-    github: "https://github.com/LautaroManzo/AdivinaLaPalabra",
+    github: "https://github.com/LautaroManzo/adivina-la-palabra",
     demo: "https://adivinalapalabra-fnb3.onrender.com/Aleatoria",
   },
 ];

@@ -92,7 +92,7 @@ const Principal = () => {
                 espacio de sobra sigue entrando todo en una línea igual. */}
             <div className="flex items-center justify-center md:justify-start flex-wrap gap-4">
               <a
-                href="/Portfolio/cv-lm.pdf"
+                href="/portfolio/cv-lm.pdf"
                 // Con `download` a secas el archivo baja como "cv-lm.pdf", que es
                 // el nombre interno del repo. Quien lo recibe lo guarda entre
                 // decenas de CVs, así que conviene que se identifique solo.
