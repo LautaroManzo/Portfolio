@@ -2,7 +2,7 @@
 
 Este es mi portfolio personal. Acá muestro los proyectos que voy haciendo, las tecnologías que uso y un poco sobre mí.
 
-[Ver sitio web](https://lautaromanzo.github.io/Portfolio)
+[Ver sitio web](https://lautaromanzo.github.io/portfolio/)
 
 ---
 
